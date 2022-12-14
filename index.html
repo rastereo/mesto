@@ -13,52 +13,73 @@
   <header class="header">
     <img src="./images/logo-mesto.svg" alt="Лого Место" class="header__logo">
   </header>
-  <main class="content">
+  <main>
     <section class="profile">
       <img src="./images/avatar-kusto.jpg" alt="" class="profile__avatar">
       <div class="profile-info">
         <h1 class="profile-info__name">Жак-Ив Кусто</h1>
-        <button class="profile-info__edit-button"><img src="./images/pencil.svg" alt="карандаш"></button>
+        <button class="profile-info__edit-button"></button>
         <p class="profile-info__job">Исследователь океана</p>
       </div>
-      <button class="profile__add-button">&#43;</button>
+      <button class="profile__add-button"></button>
     </section>
-    <section class="elements">
-      <article class="element">
-        <img src="./images/element-photos/element-photo-1.jpg" alt="Карачаевский храм" class="element__image">
-        <h2 class="element__description">Карачаевск</h2>
-        <img src="./images/like.svg" alt="Лайк" class="element__like">
+    <section class="cards">
+      <article class="card">
+        <img src="./images/cards-photos/card-photo-1.jpg" alt="Улыбающийся кот" class="card__image">
+        <div class="card__container">
+          <h2 class="card__description">Карачаевск</h2>
+          <img src="./images/like.svg" alt="Лайк" class="card__like">
+        </div>
       </article>
-      <article class="element">
-        <img src="./images/element-photos/element-photo-2.jpg" alt="Гора Эльбрус" class="element__image">
-        <h2 class="element__description">Гора Эльбрус</h2>
-        <img src="./images/like.svg" alt="Лайк" class="element__like">
+      <article class="card">
+        <img src="./images/cards-photos/card-photo-2.jpg" alt="Смурной кот" class="card__image">
+        <div class="card__container">
+          <h2 class="card__description">Гора Эльбрус</h2>
+          <img src="./images/like.svg" alt="Лайк" class="card__like">
+        </div>
       </article>
-      <article class="element">
-        <img src="./images/element-photos/element-photo-3.jpg" alt="Домбай горы" class="element__image">
-        <h2 class="element__description">Домбай</h2>
-        <img src="./images/like.svg" alt="Лайк" class="element__like">
+      <article class="card">
+        <img src="./images/cards-photos/card-photo-3.jpg" alt="Голодный кот" class="card__image">
+        <div class="card__container">
+          <h2 class="card__description">Домбай</h2>
+          <img src="./images/like.svg" alt="Лайк" class="card__like">
+        </div>
       </article>
-      <article class="element">
-        <img src="./images/element-photos/element-photo-2.jpg" alt="Гора Эльбрус" class="element__image">
-        <h2 class="element__description">Гора Эльбрус</h2>
-        <img src="./images/like.svg" alt="Лайк" class="element__like">
+      <article class="card">
+        <img src="./images/cards-photos/card-photo-4.jpg" alt="Отдающий честь кот" class="card__image">
+        <div class="card__container">
+          <h2 class="card__description">Гора Эльбрус</h2>
+          <img src="./images/like.svg" alt="Лайк" class="card__like">
+        </div>
       </article>
-      <article class="element">
-        <img src="./images/element-photos/element-photo-3.jpg" alt="Домбай горы" class="element__image">
-        <h2 class="element__description">Домбай</h2>
-        <img src="./images/like.svg" alt="Лайк" class="element__like">
+      <article class="card">
+        <img src="./images/cards-photos/card-photo-5.jpg" alt="Зевающий кот" class="card__image">
+        <div class="card__container">
+          <h2 class="card__description">Домбай</h2>
+          <img src="./images/like.svg" alt="Лайк" class="card__like">
+        </div>
       </article>
-      <article class="element">
-        <img src="./images/element-photos/element-photo-1.jpg" alt="Карачаевск храм" class="element__image">
-        <h2 class="element__description">Карачаевск</h2>
-        <img src="./images/like.svg" alt="Лайк" class="element__like">
+      <article class="card">
+        <img src="./images/cards-photos/card-photo-6.jpg" alt="Удивленный кот" class="card__image">
+        <div class="card__container">
+          <h2 class="card__description">Карачаево-Черкесия</h2>
+          <img src="./images/like.svg" alt="Лайк" class="card__like">
+        </div>
       </article>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
+  <section class="edit-profile">
+    <form class="form-profile">
+      <h3 class="form-profile__title">Редактировать профиль</h3>
+      <input type="text" value="Жак-Ив Кусто" class="form-profile__input">
+      <input type="text" value="Исследователь океана" class="form-profile__input">
+      <input type="submit" value="Сохранить" class="form-profile__save-button">
+      <button class="form-profile__close-button"></button>
+    </form>
+  </section>
 </body>
 
 </html>
