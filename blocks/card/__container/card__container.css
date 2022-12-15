@@ -1,8 +1,9 @@
 .card__container {
-  max-width: 239px;
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--card-background-color);
   margin: auto;
-  padding: 25px 0 25px;
+  padding: 25px 21px 25px;
 }

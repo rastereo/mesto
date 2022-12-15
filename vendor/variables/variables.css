@@ -9,6 +9,11 @@
   --form-profile-background-color: #fff;
   --form-profile-text-color: #000;
   --form-profile-border-color: rgba(0, 0, 0, .2);
-  --form-profile-button-hover-color: rgba(0, 0, 0, .8);
   --content-size: 68.75%;
+}
+
+@media screen and (max-width: 950px) {
+  :root {
+    --content-size: 88.125%;
+  }
 }

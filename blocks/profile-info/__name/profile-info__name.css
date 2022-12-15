@@ -8,3 +8,11 @@
   overflow: hidden;
   margin: 0;
 }
+
+@media screen and (max-width: 450px) {
+  .profile-info__name {
+    max-width: 189px;
+    font-size: 27px;
+    line-height: 1.22;
+  }
+}

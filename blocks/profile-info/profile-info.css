@@ -1,6 +1,17 @@
 .profile-info {
+  max-width: 300px;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px 19px;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+}
+
+@media screen and (max-width: 950px) {
+  .profile-info {
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    padding: 27px 0 32px;
+  }
 }
