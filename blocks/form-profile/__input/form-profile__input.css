@@ -1,0 +1,10 @@
+.form-profile__input {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: var(--form-profile-text-color);
+  border: none;
+  border-bottom: 1px solid var(--form-profile-border-color);
+  margin-bottom: 17px;
+  padding: 11px 0;
+}

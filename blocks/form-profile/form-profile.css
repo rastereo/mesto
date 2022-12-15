@@ -1,0 +1,10 @@
+.form-profile {
+  width: 359px;
+  background-color: var(--form-profile-background-color);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 36px 37px;
+  position: relative;
+}

@@ -1,0 +1,14 @@
+:root {
+  --root-background-color: #000;
+  --text-color: #fff;
+  --header-border-color: rgba(84, 84, 84, .7);
+  --card-background-color: #fff;
+  --card-text-color: #000;
+  --footer-text-color: #545454;
+  --edit-profile-backgroud-color: rgba(0, 0, 0, .6);
+  --form-profile-background-color: #fff;
+  --form-profile-text-color: #000;
+  --form-profile-border-color: rgba(0, 0, 0, .2);
+  --form-profile-button-hover-color: rgba(0, 0, 0, .8);
+  --content-size: 68.75%;
+}

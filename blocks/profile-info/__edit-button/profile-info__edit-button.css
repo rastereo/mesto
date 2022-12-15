@@ -1,0 +1,27 @@
+.profile-info__edit-button {
+  width: 24px;
+  height: 24px;
+  background-color: var(--root-background-color);
+  border: 1px solid var(--text-color);
+  cursor: pointer;
+  margin-top: 5px;
+  padding: 0;
+  position: relative;
+}
+
+.profile-info__edit-button::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-image: url(../../../images/pencil.svg);
+  background-position: 0 0;
+  background-repeat: repeat;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profile-info__edit-button:hover {
+  opacity: .6;
+}

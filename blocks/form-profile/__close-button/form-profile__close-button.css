@@ -1,0 +1,17 @@
+.form-profile__close-button {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../../images/close-icon.svg);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+}
+
+.form-profile__close-button:hover {
+  opacity: .6;
+}

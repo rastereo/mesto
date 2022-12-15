@@ -1,0 +1,5 @@
+.footer {
+  max-width: var(--content-size);
+  margin: auto;
+  padding: 67px 0 60px;
+}
