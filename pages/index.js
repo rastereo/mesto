@@ -9,37 +9,35 @@ let nameInput = formPopup.querySelector('.popup__input_name');
 let jobInput = formPopup.querySelector('.popup__input_job');
 let saveButton = formPopup.querySelector('.popup__save-button');
 
-function renderPopupInputs() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-}
-
-renderPopupInputs();
-
 for (let i = 0; i < likeButton.length; i++) {
   likeButton[i].addEventListener('click', function () {
     likeButton[i].classList.toggle('card__like-button_active')
   });
 }
 
+function renderPopupInputs() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+}
+
+function renderProfileInfo() {
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+}
+
 function actionPopup(evt) {
   evt.preventDefault();
+  renderPopupInputs();
   popup.classList.toggle('popup_opened');
+  nameInput.style.outline = "none"
+}
+
+function rewriteProfileInfo(evt) {
+  evt.preventDefault();
+  renderProfileInfo();
+  actionPopup(evt);
 }
 
 editButton.addEventListener('click', actionPopup);
 closeButton.addEventListener('click', actionPopup);
-
-function rewriteProfileInfo(evt) {
-  if (nameInput.value.length !== 0) {
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    actionPopup(evt);
-    nameInput.style.outline = "none"
-  } else {
-    evt.preventDefault();
-    nameInput.style.outline = "2px solid red"
-  }
-}
-
 saveButton.addEventListener('click', rewriteProfileInfo);
