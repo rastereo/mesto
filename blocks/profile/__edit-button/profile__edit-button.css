@@ -1,4 +1,4 @@
-.profile-info__edit-button {
+.profile__edit-button {
   width: 24px;
   height: 24px;
   background-color: var(--root-background-color);
@@ -12,7 +12,7 @@
   transition: opacity .6s;
 }
 
-.profile-info__edit-button::before {
+.profile__edit-button::before {
   content: "";
   width: 10px;
   height: 10px;
@@ -26,12 +26,12 @@
   transform: translate(-50%, -50%);
 }
 
-.profile-info__edit-button:hover {
+.profile__edit-button:hover {
   opacity: .6;
 }
 
 @media screen and (max-width: 950px) {
-  .profile-info__edit-button {
+  .profile__edit-button {
     width: 18px;
     height: 18px;
     top: 34px;
@@ -39,7 +39,7 @@
     margin-top: 0;
   }
 
-  .profile-info__edit-button::before {
+  .profile__edit-button::before {
     width: 7.5px;
     height: 7.5px;
   }

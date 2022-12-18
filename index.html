@@ -16,54 +16,54 @@
   <main>
     <section class="profile">
       <img src="./images/avatar-kusto.jpg" alt="" class="profile__avatar">
-      <div class="profile-info">
-        <h1 class="profile-info__name">Жак-Ив Кусто</h1>
-        <p class="profile-info__job">Исследователь океана</p>
-        <button class="profile-info__edit-button"></button>
+      <div class="profile__info">
+        <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <p class="profile__job">Исследователь океана</p>
+        <button type="button" class="profile__edit-button"></button>
       </div>
-      <button class="profile__add-button"></button>
+      <button type="button" class="profile__add-button"></button>
     </section>
     <section class="cards">
       <article class="card">
         <img src="./images/cards-photos/card-photo-1.jpg" alt="Улыбающийся кот" class="card__image">
         <div class="card__container">
           <h2 class="card__description">Карачаевск</h2>
-          <button class="card__like-button"></button>
+          <button type="button" class="card__like-button"></button>
         </div>
       </article>
       <article class="card">
         <img src="./images/cards-photos/card-photo-2.jpg" alt="Смурной кот" class="card__image">
         <div class="card__container">
           <h2 class="card__description">Гора Эльбрус</h2>
-          <button class="card__like-button"></button>
+          <button type="button" class="card__like-button"></button>
         </div>
       </article>
       <article class="card">
         <img src="./images/cards-photos/card-photo-3.jpg" alt="Голодный кот" class="card__image">
         <div class="card__container">
           <h2 class="card__description">Домбай</h2>
-          <button class="card__like-button"></button>
+          <button type="button" class="card__like-button"></button>
         </div>
       </article>
       <article class="card">
         <img src="./images/cards-photos/card-photo-4.jpg" alt="Отдающий честь кот" class="card__image">
         <div class="card__container">
           <h2 class="card__description">Гора Эльбрус</h2>
-          <button class="card__like-button"></button>
+          <button type="button" class="card__like-button"></button>
         </div>
       </article>
       <article class="card">
         <img src="./images/cards-photos/card-photo-5.jpg" alt="Зевающий кот" class="card__image">
         <div class="card__container">
           <h2 class="card__description">Домбай</h2>
-          <button class="card__like-button"></button>
+          <button type="button" class="card__like-button"></button>
         </div>
       </article>
       <article class="card">
         <img src="./images/cards-photos/card-photo-6.jpg" alt="Удивленный кот" class="card__image">
         <div class="card__container">
           <h2 class="card__description">Карачаево-Черкесия</h2>
-          <button class="card__like-button"></button>
+          <button type="button" class="card__like-button"></button>
         </div>
       </article>
     </section>
@@ -71,16 +71,18 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <section class="popup">
-    <form class="popup__container">
+  <div class="popup">
+    <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <input type="text" class="popup__input popup__input_name">
-      <input type="text" class="popup__input popup__input_job">
-      <input type="submit" value="Сохранить" class="popup__save-button">
-      <button class="popup__close-button"></button>
-    </form>
-  </section>
-  <script src="./pages/index.js"></script>
+      <form action="#" method="get" name="edit-profile" class="popup__form">
+        <input type="text" name="name" class="popup__input popup__input_value_name">
+        <input type="text" name="job" class="popup__input popup__input_value_job">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close-button"></button>
+    </div>
+  </div>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>
