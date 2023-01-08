@@ -25,14 +25,15 @@ const initialCards = [
   }
 ];
 
-let editButton = document.querySelector('.profile__edit-button');
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__job');
-let popup = document.querySelector('.popup');
-let closeButton = popup.querySelector('.popup__close-button');
-let formPopup = popup.querySelector('.popup__form');
-let nameInput = formPopup.querySelector('.popup__input_value_name');
-let jobInput = formPopup.querySelector('.popup__input_value_job');
+const editButton = document.querySelector('.profile__edit-button');
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
+const popup = document.querySelector('.popup');
+const closeButton = popup.querySelector('.popup__close-button');
+const formPopup = popup.querySelector('.popup__form');
+const nameInput = formPopup.querySelector('.popup__input_value_name');
+const jobInput = formPopup.querySelector('.popup__input_value_job');
+const cards = document.querySelector('.cards');
 
 function renderPopupInputs() {
   nameInput.value = profileName.textContent;
@@ -62,14 +63,18 @@ closeButton.addEventListener('click', actionPopup);
 formPopup.addEventListener('submit', rewriteProfileInfo);
 
 function renderCard (item) {
-  const cards = document.querySelector('.cards');
   const copyTemplateCards = document.querySelector('#template-cards').content.cloneNode(true);
   const card = copyTemplateCards.querySelector('.card');
+  const cardDescription = copyTemplateCards.querySelector('.card__description');
+  const cardImage = copyTemplateCards.querySelector('.card__image');
+  const deleteButton = copyTemplateCards.querySelector('.card__delete-button');
+  const likeButton = copyTemplateCards.querySelector('.card__like-button');
 
-  copyTemplateCards.querySelector('.card__description').textContent = item.name;
-  copyTemplateCards.querySelector('.card__image').src = item.link;
-  copyTemplateCards.querySelector('.card__image').alt = item.name;
-  copyTemplateCards.querySelector('.card__delete-button').addEventListener('click', () => card.remove());
+  cardDescription.textContent = item.name;
+  cardImage.src = item.link;
+  cardImage.alt = item.name;
+  deleteButton.addEventListener('click', () => card.remove());
+  likeButton.addEventListener('click', () => likeButton.classList.toggle('card__like-button_active'));
 
   cards.append(copyTemplateCards);
 }
