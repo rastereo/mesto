@@ -33,3 +33,41 @@ function rewriteProfileInfo(evt) {
 editButton.addEventListener('click', actionPopup);
 closeButton.addEventListener('click', actionPopup);
 formPopup.addEventListener('submit', rewriteProfileInfo);
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+initialCards.forEach(item => {
+  const cards = document.querySelector('.cards');
+  const copyTemplateCards = document.querySelector('#template-cards').content.cloneNode(true);
+
+  copyTemplateCards.querySelector('.card__description').textContent = `${item.name}`;
+  copyTemplateCards.querySelector('.card__image').src = item.link;
+  copyTemplateCards.querySelector('.card__image').alt = `${item.name}`;
+
+  cards.append(copyTemplateCards);
+});
