@@ -48,6 +48,24 @@
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 
+/** Popup-image **/
+@import url(../blocks/popup-image/popup-image.css);
+@import url(../blocks/popup-image/_opened/popup-image_opened.css);
+@import url(../blocks/popup-image/__figure/popup-image__figure.css);
+@import url(../blocks/popup-image/__photo/popup-image__photo.css);
+@import url(../blocks/popup-image/__caption/popup-image__caption.css);
+@import url(../blocks/popup-image/__close-button/popup-image__close-button.css);
+
+
+
+
+
+
+
+
+
+
+
 /* *,
 *::before,
 *::after {

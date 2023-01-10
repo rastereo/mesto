@@ -29,14 +29,14 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
+const cards = document.querySelector('.cards');
 const popup = document.querySelector('.popup');
 const closeButton = popup.querySelector('.popup__close-button');
 const popupForm = popup.querySelector('.popup__form');
 const popupInputs = popup.querySelectorAll('.popup__input');
 const saveButton = popup.querySelectorAll('.popup__save-button');
-const cards = document.querySelector('.cards');
 
-function renderpopupInputArrs() {
+function renderpopupInput() {
   popupForm.name.value = profileName.textContent;
   popupForm.job.value = profileJob.textContent;
 }
@@ -72,7 +72,7 @@ function actionPopup(evt) {
 
     saveButton.id = 'save-profile';
 
-    renderpopupInputArrs();
+    renderpopupInput();
   } else if (evt.target === addButton) {
     popupTitle.textContent = 'Новое место';
     popupForm.name = 'add-image';
@@ -124,6 +124,7 @@ function addCard (item, index) {
   const cardImage = copyTemplateCards.querySelector('.card__image');
   const deleteButton = copyTemplateCards.querySelector('.card__delete-button');
   const likeButton = copyTemplateCards.querySelector('.card__like-button');
+  const imageButton = copyTemplateCards.querySelector('.card__image')
 
   cardDescription.textContent = item.name;
   cardImage.src = item.link;
@@ -132,6 +133,20 @@ function addCard (item, index) {
   deleteButton.addEventListener('click', () => {
     card.remove();
     initialCards.splice(index, 1);
+  });
+
+  imageButton.addEventListener('click', () => {
+    const popupImage = document.querySelector('.popup-image');
+    const image = popupImage.querySelector('.popup-image__photo');
+    const caption = popupImage.querySelector('.popup-image__caption');
+    const closeImageButton = popupImage.querySelector('.popup-image__close-button');
+
+    popupImage.classList.add('popup-image_opened');
+
+    image.src = item.link;
+    caption.textContent = item.name;
+
+    closeImageButton.addEventListener('click', () => popupImage.classList.remove('popup-image_opened'));
   });
 
   likeButton.addEventListener('click', () => likeButton.classList.toggle('card__like-button_active'));
