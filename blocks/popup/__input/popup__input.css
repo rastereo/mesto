@@ -9,3 +9,10 @@
   margin-bottom: 17px;
   padding: 11px 0;
 }
+
+.popup__input::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--input-placeholder-color);
+}

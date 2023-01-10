@@ -5,10 +5,11 @@
   --card-background-color: #fff;
   --card-text-color: #000;
   --footer-text-color: #545454;
-  --edit-profile-backgroud-color: rgba(0, 0, 0, .6);
+  --popup-background-color: rgba(0, 0, 0, .6);
   --form-profile-background-color: #fff;
   --form-profile-text-color: #000;
   --form-profile-border-color: rgba(0, 0, 0, .2);
+  --input-placeholder-color: #c4c4c4;
   --content-size: 68.75%;
 }
 

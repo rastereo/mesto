@@ -47,3 +47,9 @@
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
+
+/* *,
+*::before,
+*::after {
+  outline: 2px solid red;
+} */

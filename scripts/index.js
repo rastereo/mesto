@@ -26,43 +26,98 @@ const initialCards = [
 ];
 
 const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 const popup = document.querySelector('.popup');
 const closeButton = popup.querySelector('.popup__close-button');
-const formPopup = popup.querySelector('.popup__form');
-const nameInput = formPopup.querySelector('.popup__input_value_name');
-const jobInput = formPopup.querySelector('.popup__input_value_job');
+const popupForm = popup.querySelector('.popup__form');
+const popupInputs = popup.querySelectorAll('.popup__input');
+const saveButton = popup.querySelectorAll('.popup__save-button');
 const cards = document.querySelector('.cards');
 
-function renderPopupInputs() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+function renderpopupInputArrs() {
+  popupForm.name.value = profileName.textContent;
+  popupForm.job.value = profileJob.textContent;
 }
 
 function renderProfileInfo() {
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  profileName.textContent = popupForm.name.value;
+  profileJob.textContent = popupForm.job.value;
 }
 
-function actionPopup() {
+function actionPopup(evt) {
+  const popupTitle = popup.querySelector('.popup__title');
+  const popupInputArr = Array.from(popup.querySelectorAll('.popup__input'));
+
   popup.classList.toggle('popup_opened');
-  if (popup.classList.contains('popup_opened')) {
-    renderPopupInputs();
+
+  popupInputArr.forEach(input => {
+    input.value = '';
+    input.placeholder = '';
+    input.name = '';
+  });
+
+  if (evt.target === editButton) {
+    popupTitle.textContent = 'Редактировать профиль';
+    popupForm.name = 'edit-profile';
+
+    popupInputArr[0].name = 'name';
+    popupInputArr[1].name = 'job';
+
+    popupInputArr[1].type = 'text';
+
+    popupInputArr[0].required = true;
+    popupInputArr[1].required = false;
+
+    saveButton.id = 'save-profile';
+
+    renderpopupInputArrs();
+  } else if (evt.target === addButton) {
+    popupTitle.textContent = 'Новое место';
+    popupForm.name = 'add-image';
+
+    popupInputArr[0].name = 'description';
+    popupInputArr[1].name = 'link';
+
+    popupInputArr[1].type = 'url';
+
+    popupInputArr[0].placeholder = 'Название';
+    popupInputArr[1].placeholder = 'Ссылка на картинку';
+
+    popupInputArr[0].required = false;
+    popupInputArr[1].required = true;
+
+    saveButton.id = 'save-image';
   }
 }
 
-function rewriteProfileInfo(evt) {
+function rewritePage(evt) {
   evt.preventDefault();
-  renderProfileInfo();
-  actionPopup();
+
+  if (saveButton.id === 'save-profile') {
+    renderProfileInfo();
+  } else if (saveButton.id === 'save-image') {
+    cardObject = new Object();
+
+    cardObject.name = popupForm.description.value;
+    cardObject.link = popupForm.link.value;
+
+    cards.innerHTML = '';
+
+    initialCards.unshift(cardObject);
+    initialCards.forEach(addCard);
+  }
+
+  popup.classList.remove('popup_opened');
 }
 
 editButton.addEventListener('click', actionPopup);
+addButton.addEventListener('click', actionPopup);
 closeButton.addEventListener('click', actionPopup);
-formPopup.addEventListener('submit', rewriteProfileInfo);
+popupForm.addEventListener('submit', rewritePage);
 
-function renderCard (item) {
+function addCard (item, index) {
   const copyTemplateCards = document.querySelector('#template-cards').content.cloneNode(true);
   const card = copyTemplateCards.querySelector('.card');
   const cardDescription = copyTemplateCards.querySelector('.card__description');
@@ -73,10 +128,15 @@ function renderCard (item) {
   cardDescription.textContent = item.name;
   cardImage.src = item.link;
   cardImage.alt = item.name;
-  deleteButton.addEventListener('click', () => card.remove());
+
+  deleteButton.addEventListener('click', () => {
+    card.remove();
+    initialCards.splice(index, 1);
+  });
+
   likeButton.addEventListener('click', () => likeButton.classList.toggle('card__like-button_active'));
 
   cards.append(copyTemplateCards);
 }
 
-initialCards.forEach(renderCard);
+initialCards.forEach(addCard);
