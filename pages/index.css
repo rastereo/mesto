@@ -55,19 +55,3 @@
 @import url(../blocks/popup-image/__photo/popup-image__photo.css);
 @import url(../blocks/popup-image/__caption/popup-image__caption.css);
 @import url(../blocks/popup-image/__close-button/popup-image__close-button.css);
-
-
-
-
-
-
-
-
-
-
-
-/* *,
-*::before,
-*::after {
-  outline: 2px solid red;
-} */

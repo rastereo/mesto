@@ -1,27 +1,27 @@
 const initialCards = [
   {
     name: 'Чудак',
-    link: 'https://images.unsplash.com/photo-1574158622682-e40e69881006'
+    link: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
   },
   {
     name: 'Шпуня',
-    link: 'https://images.unsplash.com/photo-1491485880348-85d48a9e5312'
+    link: 'https://images.unsplash.com/photo-1491485880348-85d48a9e5312?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
   },
   {
     name: 'Бутус',
-    link: 'https://images.unsplash.com/photo-1513245543132-31f507417b26'
+    link: 'https://images.unsplash.com/photo-1667599611845-dd0c46e67c91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
   },
   {
     name: 'Малой',
-    link: 'https://images.unsplash.com/photo-1606225457115-9b0de873c5db'
+    link: 'https://images.unsplash.com/photo-1606225457115-9b0de873c5db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
   },
   {
     name: 'Пуговка',
-    link: 'https://images.unsplash.com/photo-1548366086-7f1b76106622'
+    link: 'https://images.unsplash.com/photo-1548366086-7f1b76106622?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=676&q=80'
   },
   {
     name: 'Зусик',
-    link: 'https://images.unsplash.com/photo-1571988840298-3b5301d5109b'
+    link: 'https://images.unsplash.com/photo-1571988840298-3b5301d5109b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
   }
 ];
 
@@ -34,7 +34,7 @@ const popup = document.querySelector('.popup');
 const closeButton = popup.querySelector('.popup__close-button');
 const popupForm = popup.querySelector('.popup__form');
 const popupInputs = popup.querySelectorAll('.popup__input');
-const saveButton = popup.querySelectorAll('.popup__save-button');
+const saveButton = popup.querySelector('.popup__save-button');
 
 function renderpopupInput() {
   popupForm.name.value = profileName.textContent;
@@ -71,6 +71,7 @@ function actionPopup(evt) {
     popupInputArr[1].required = false;
 
     saveButton.id = 'save-profile';
+    saveButton.textContent = 'Сохранить'
 
     renderpopupInput();
   } else if (evt.target === addButton) {
@@ -89,6 +90,7 @@ function actionPopup(evt) {
     popupInputArr[1].required = true;
 
     saveButton.id = 'save-image';
+    saveButton.textContent = 'Создать'
   }
 }
 
@@ -117,7 +119,7 @@ addButton.addEventListener('click', actionPopup);
 closeButton.addEventListener('click', actionPopup);
 popupForm.addEventListener('submit', rewritePage);
 
-function addCard (item, index) {
+function addCard(item, index) {
   const copyTemplateCards = document.querySelector('#template-cards').content.cloneNode(true);
   const card = copyTemplateCards.querySelector('.card');
   const cardDescription = copyTemplateCards.querySelector('.card__description');
