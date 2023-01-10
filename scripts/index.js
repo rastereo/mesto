@@ -1,27 +1,27 @@
 const initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    name: 'Чудак',
+    link: 'https://images.unsplash.com/photo-1574158622682-e40e69881006'
   },
   {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    name: 'Шпуня',
+    link: 'https://images.unsplash.com/photo-1491485880348-85d48a9e5312'
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    name: 'Бутус',
+    link: 'https://images.unsplash.com/photo-1513245543132-31f507417b26'
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Малой',
+    link: 'https://images.unsplash.com/photo-1606225457115-9b0de873c5db'
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    name: 'Пуговка',
+    link: 'https://images.unsplash.com/photo-1548366086-7f1b76106622'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    name: 'Зусик',
+    link: 'https://images.unsplash.com/photo-1571988840298-3b5301d5109b'
   }
 ];
 
@@ -144,6 +144,7 @@ function addCard (item, index) {
     popupImage.classList.add('popup-image_opened');
 
     image.src = item.link;
+    image.alt = item.name;
     caption.textContent = item.name;
 
     closeImageButton.addEventListener('click', () => popupImage.classList.remove('popup-image_opened'));
