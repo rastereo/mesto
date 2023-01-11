@@ -28,22 +28,33 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_name_edit-profile">
     <div class="popup__container">
-      <h3 class="popup__title"></h3>
-      <form action="#" method="get" class="popup__form">
-        <input type="text" class="popup__input">
-        <input type="text" class="popup__input">
-        <button type="submit" class="popup__save-button"></button>
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form action="#" method="get" name="edit-profile" class="popup__form">
+        <input type="text" name="name" class="popup__input popup__input_value_name" required>
+        <input type="text" name="job" class="popup__input popup__input_value_job">
+        <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
       <button type="button" class="popup__close-button"></button>
     </div>
   </div>
-  <div class="popup-image">
-    <figure class="popup-image__figure">
-      <button type="button" class="popup-image__close-button"></button>
-      <img src="#" alt="popup image" class="popup-image__photo">
-      <figcaption class="popup-image__caption"></figcaption>
+  <div class="popup popup_name_add-image">
+    <div class="popup__container">
+      <h3 class="popup__title">Новое место</h3>
+      <form action="#" method="get" name="add-image" class="popup__form">
+        <input type="text" name="description" placeholder="Название" class="popup__input popup__input_value_description">
+        <input type="url" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_value_link" required>
+        <button type="submit" class="popup__save-button">Создать</button>
+      </form>
+      <button type="button" class="popup__close-button"></button>
+    </div>
+  </div>
+  <div class="popup popup_name_image">
+    <figure class="popup__figure">
+      <button type="button" class="popup__close-button"></button>
+      <img src="#" alt="popup image" class="popup__photo">
+      <figcaption class="popup__caption"></figcaption>
     </figure>
   </div>
   <template id="template-cards">
@@ -60,4 +71,3 @@
 </body>
 
 </html>
-
