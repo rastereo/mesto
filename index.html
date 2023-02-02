@@ -32,8 +32,10 @@
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
       <form action="#" method="get" name="edit-profile" class="popup__form">
-        <input type="text" name="name" placeholder="Имя" class="popup__input popup__input_value_name" required>
-        <input type="text" name="job" placeholder="О себе" class="popup__input popup__input_value_job">
+        <input type="text" name="name" placeholder="Имя" class="popup__input popup__input_value_name" minlength="2" maxlength="40" required>
+        <span class="popup__error popup__error_name_name"></span>
+        <input type="text" name="job" placeholder="О себе" class="popup__input popup__input_value_job" minlength="2" maxlength="200" required>
+        <span class="popup__error popup__error_name_job"></span>
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
       <button type="button" class="popup__close-button"></button>
@@ -43,9 +45,11 @@
     <div class="popup__container">
       <h3 class="popup__title">Новое место</h3>
       <form action="#" method="get" name="add-image" class="popup__form">
-        <input type="text" name="description" placeholder="Название" class="popup__input popup__input_value_description">
+        <input type="text" name="description" placeholder="Название" class="popup__input popup__input_value_description" minlength="2" maxlength="30" required>
+        <span class="popup__error popup__error_name_description"></span>
         <input type="url" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_value_link" required>
-        <button type="submit" class="popup__save-button">Создать</button>
+        <span class="popup__error popup__error_name_link"></span>
+        <button type="submit" class="popup__save-button popup__save-button_disabled" disabled>Создать</button>
       </form>
       <button type="button" class="popup__close-button"></button>
     </div>

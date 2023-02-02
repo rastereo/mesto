@@ -15,7 +15,7 @@ const popupImage = document.querySelector('.popup_name_image');
 const photo = popupImage.querySelector('.popup__photo');
 const caption = popupImage.querySelector('.popup__caption');
 const imageCloseButton = popupImage.querySelector('.popup__close-button');
-const closeButton = document.querySelectorAll('.popup__close-button')
+const closeButton = document.querySelectorAll('.popup__close-button');
 const templateCard = document.querySelector('#template-cards');
 
 function openPopup(popup) {
@@ -88,9 +88,7 @@ function addCard(item) {
   cardImage.src = item.link;
   cardImage.alt = item.name;
 
-  deleteButton.addEventListener('click', () => {
-    card.remove();
-  });
+  deleteButton.addEventListener('click', () => card.remove());
 
   cardImage.addEventListener('click', () => {
     renderPopupImage(item);

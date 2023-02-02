@@ -11,6 +11,7 @@
   --form-profile-text-color: #000;
   --form-profile-border-color: rgba(0, 0, 0, .2);
   --input-placeholder-color: #c4c4c4;
+  --error-color: #ff0000;
   --content-size: 68.75%;
 }
 
