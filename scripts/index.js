@@ -20,14 +20,18 @@ const templateCard = document.querySelector('#template-cards');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+
+  window.addEventListener('keydown', keyHandler);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+
+  window.removeEventListener('keydown', keyHandler);
 }
 
-function keyHandler(evt, popup) {
-  if (evt.key === 'Escape') closePopup(popup);
+function keyHandler(evt) {
+  if (evt.key === 'Escape') closePopup(document.querySelector('.popup_opened'));
 }
 
 function targetHandler(evt, popup) {
@@ -67,6 +71,8 @@ function rewriteProfileInfo(evt) {
 
   renderProfileInfo();
   closePopup(popupEditProfile);
+
+  popupEditProfileSaveButton.removeEventListener('click', rewriteProfileInfo);
 }
 
 function addImageToProfile(evt) {
@@ -81,6 +87,8 @@ function addImageToProfile(evt) {
   closePopup(popupAddImage);
 
   popupAddImageForms.reset();
+
+  popupAddImageSaveButton.removeEventListener('click', addImageToProfile);
 }
 
 function createCard(item) {
@@ -108,17 +116,17 @@ function createCard(item) {
 editButton.addEventListener('click', () => {
   openPopup(popupEditProfile);
   renderPopupInputs();
+  popupEditProfileSaveButton.addEventListener('click', rewriteProfileInfo);
 });
 
-addButton.addEventListener('click', () => openPopup(popupAddImage));
+addButton.addEventListener('click', () => {
+  openPopup(popupAddImage)
+  popupAddImageSaveButton.addEventListener('click', addImageToProfile);
+});
 
 popupList.forEach(popup => {
   const closeButton = popup.querySelector('.popup__close-button');
 
   closeButton.addEventListener('click', () => closePopup(popup));
   popup.addEventListener('click', (evt) => targetHandler(evt, popup));
-  window.addEventListener('keydown', (evt) => keyHandler(evt, popup));
 });
-
-popupEditProfileSaveButton.addEventListener('click', rewriteProfileInfo);
-popupAddImageSaveButton.addEventListener('click', addImageToProfile);

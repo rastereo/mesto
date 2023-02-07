@@ -4,8 +4,10 @@
   background: none;
   opacity: 0.2;
   transition: none;
+  transition: All .6s;
 }
 
 .popup__save-button_disabled:hover {
   opacity: 0.2;
+  cursor: default;
 }
