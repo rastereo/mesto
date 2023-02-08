@@ -25,13 +25,13 @@ function hideErrorMessage(error, config) {
   error.textContent = '';
 }
 
-function toggleInputValidation(input, error) {
+function toggleInputValidation(input, error, config) {
   if (!input.validity.valid) {
-    makeInvalidInput(input, formValidationConfig.inputErrorClass);
-    showErrorMessage(error, formValidationConfig.errorClass, input);
+    makeInvalidInput(input, config.inputErrorClass);
+    showErrorMessage(error, config.errorClass, input);
   } else {
-    removeInvalidInput(input, formValidationConfig.inputErrorClass);
-    hideErrorMessage(error, formValidationConfig.errorClass);
+    removeInvalidInput(input, config.inputErrorClass);
+    hideErrorMessage(error, config.errorClass);
   }
 }
 
@@ -60,7 +60,7 @@ function toggleDisabledSubmit(inputArr, submit, config) {
 }
 
 function enableValidation(config) {
-  const formList = document.querySelectorAll(formValidationConfig.formSelector);
+  const formList = document.querySelectorAll(config.formSelector);
 
   formList.forEach(form => {
     const inputList = Array.from(form.querySelectorAll(config.inputSelector));
@@ -70,7 +70,7 @@ function enableValidation(config) {
       const errorMessage = form.querySelector(`.popup__error_name_${input.name}`);
 
       input.addEventListener('input', () => {
-        toggleInputValidation(input, errorMessage);
+        toggleInputValidation(input, errorMessage, config);
         toggleDisabledSubmit(inputList, submitButton, config.inactiveButtonClass);
       });
     });
@@ -92,11 +92,3 @@ function resetValidation(form, config) {
 }
 
 enableValidation(formValidationConfig);
-
-editButton.addEventListener('click', () => {
-  resetValidation(popupEditProfileForms, formValidationConfig);
-});
-
-addButton.addEventListener('click', () => {
-  resetValidation(popupAddImage, formValidationConfig);
-});

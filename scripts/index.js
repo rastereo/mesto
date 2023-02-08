@@ -21,20 +21,20 @@ const templateCard = document.querySelector('#template-cards');
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 
-  window.addEventListener('keydown', keyHandler);
+  window.addEventListener('keydown', handleEscClose);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 
-  window.removeEventListener('keydown', keyHandler);
+  window.removeEventListener('keydown', handleEscClose);
 }
 
-function keyHandler(evt) {
+function handleEscClose(evt) {
   if (evt.key === 'Escape') closePopup(document.querySelector('.popup_opened'));
 }
 
-function targetHandler(evt, popup) {
+function handleTarget(evt, popup) {
   if (evt.target.classList.contains('popup')) closePopup(popup);
 }
 
@@ -71,8 +71,6 @@ function rewriteProfileInfo(evt) {
 
   renderProfileInfo();
   closePopup(popupEditProfile);
-
-  popupEditProfileSaveButton.removeEventListener('click', rewriteProfileInfo);
 }
 
 function addImageToProfile(evt) {
@@ -87,8 +85,6 @@ function addImageToProfile(evt) {
   closePopup(popupAddImage);
 
   popupAddImageForms.reset();
-
-  popupAddImageSaveButton.removeEventListener('click', addImageToProfile);
 }
 
 function createCard(item) {
@@ -116,17 +112,20 @@ function createCard(item) {
 editButton.addEventListener('click', () => {
   openPopup(popupEditProfile);
   renderPopupInputs();
-  popupEditProfileSaveButton.addEventListener('click', rewriteProfileInfo);
+  resetValidation(popupEditProfileForms, formValidationConfig);
 });
 
 addButton.addEventListener('click', () => {
   openPopup(popupAddImage)
-  popupAddImageSaveButton.addEventListener('click', addImageToProfile);
+  resetValidation(popupAddImage, formValidationConfig);
 });
 
 popupList.forEach(popup => {
   const closeButton = popup.querySelector('.popup__close-button');
 
   closeButton.addEventListener('click', () => closePopup(popup));
-  popup.addEventListener('click', (evt) => targetHandler(evt, popup));
+  popup.addEventListener('click', (evt) => handleTarget(evt, popup));
 });
+
+popupEditProfileForms.addEventListener('submit', rewriteProfileInfo);
+popupAddImageForms.addEventListener('submit', addImageToProfile);
