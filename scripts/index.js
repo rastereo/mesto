@@ -16,7 +16,65 @@ const popupImage = document.querySelector('.popup_name_image');
 const photo = popupImage.querySelector('.popup__photo');
 const caption = popupImage.querySelector('.popup__caption');
 const imageCloseButton = popupImage.querySelector('.popup__close-button');
-const templateCard = document.querySelector('#template-cards');
+
+class Card {
+  constructor(data, templateSelector) {
+    this._name = data.name;
+    this._link = data.link;
+    this._templateSelector = templateSelector;
+  }
+
+  _getTemplate() {
+    const copyTemplateCard = document
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector('.card')
+      .cloneNode(true);
+
+    return copyTemplateCard;
+  }
+
+  _setEventListeners() {
+    this._element.querySelector('.card__delete-button').addEventListener('click', () => this._element.remove());
+    this._element.querySelector('.card__like-button').addEventListener('click', () => this._handleToggle());
+    this._element.querySelector('.card__image').addEventListener('click', () => {
+      this._renderPopupImage();
+
+      openPopup(popupImage);
+    });
+  }
+
+  _handleToggle() {
+    this._element.querySelector('.card__like-button').classList.toggle('card__like-button_active');
+  }
+
+  _renderPopupImage() {
+    photo.src = this._link;
+    photo.alt = this._name;
+
+    caption.textContent = this._name;
+  }
+
+  generateCard() {
+    this._element = this._getTemplate();
+
+    this._element.querySelector('.card__description').textContent = this._name;
+    this._element.querySelector('.card__image').src = this._link;
+    this._element.querySelector('.card__image').alt = this._name;
+
+    this._setEventListeners();
+
+    return this._element;
+  }
+}
+
+function handleEscClose(evt) {
+  if (evt.key === 'Escape') closePopup(document.querySelector('.popup_opened'));
+}
+
+function handleTarget(evt, popup) {
+  if (evt.target.classList.contains('popup')) closePopup(popup);
+}
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -30,20 +88,6 @@ function closePopup(popup) {
   window.removeEventListener('keydown', handleEscClose);
 }
 
-function handleEscClose(evt) {
-  if (evt.key === 'Escape') closePopup(document.querySelector('.popup_opened'));
-}
-
-function handleTarget(evt, popup) {
-  if (evt.target.classList.contains('popup')) closePopup(popup);
-}
-
-function renderProfileImages() {
-  initialCards.forEach(renderCard);
-}
-
-renderProfileImages();
-
 function renderPopupInputs() {
   popupEditProfileForms.name.value = profileName.textContent;
   popupEditProfileForms.job.value = profileJob.textContent;
@@ -54,23 +98,17 @@ function renderProfileInfo() {
   profileJob.textContent = popupEditProfileForms.job.value;
 }
 
-function renderCard(item) {
-  const newCard = createCard(item);
-
-  cardsContainer.prepend(newCard);
-}
-
-function renderPopupImage(card) {
-  photo.src = card.link;
-  photo.alt = card.name;
-  caption.textContent = card.name;
-}
-
 function rewriteProfileInfo(evt) {
   evt.preventDefault();
 
   renderProfileInfo();
   closePopup(popupEditProfile);
+}
+
+function renderCard(item) {
+  const card = new Card(item, '#template-cards');
+
+  cardsContainer.prepend(card.generateCard());
 }
 
 function addImageToProfile(evt) {
@@ -87,27 +125,13 @@ function addImageToProfile(evt) {
   popupAddImageForms.reset();
 }
 
-function createCard(item) {
-  const copyTemplateCard = templateCard.content.cloneNode(true);
-  const card = copyTemplateCard.querySelector('.card');
-  const cardDescription = card.querySelector('.card__description');
-  const cardImage = card.querySelector('.card__image');
-  const deleteButton = card.querySelector('.card__delete-button');
-  const likeButton = card.querySelector('.card__like-button');
-
-  cardDescription.textContent = item.name;
-  cardImage.src = item.link;
-  cardImage.alt = item.name;
-
-  deleteButton.addEventListener('click', () => card.remove());
-  likeButton.addEventListener('click', () => likeButton.classList.toggle('card__like-button_active'));
-  cardImage.addEventListener('click', () => {
-    renderPopupImage(item);
-    openPopup(popupImage);
+function renderProfileImages() {
+  initialCards.forEach(item => {
+    renderCard(item)
   });
-
-  return copyTemplateCard;
 }
+
+renderProfileImages();
 
 editButton.addEventListener('click', () => {
   openPopup(popupEditProfile);
