@@ -7,88 +7,96 @@ const formValidationConfig = {
   errorClass: 'popup__error_visible'
 }
 
-function makeInvalidInput(input, config) {
-  input.classList.add(config);
-}
-
-function removeInvalidInput(input, config) {
-  input.classList.remove(config);
-}
-
-function showErrorMessage(error, config, input) {
-  error.classList.add(config);
-  error.textContent = input.validationMessage;
-}
-
-function hideErrorMessage(error, config) {
-  error.classList.remove(config);
-  error.textContent = '';
-}
-
-function toggleInputValidation(input, error, config) {
-  if (!input.validity.valid) {
-    makeInvalidInput(input, config.inputErrorClass);
-    showErrorMessage(error, config.errorClass, input);
-  } else {
-    removeInvalidInput(input, config.inputErrorClass);
-    hideErrorMessage(error, config.errorClass);
+class FormValidator {
+  constructor(config, form) {
+    this._formSelector = config.formSelector;
+    this._inputSelector = config.inputSelector;
+    this._submitButtonSelector = config.submitButtonSelector;
+    this._inactiveButtonClass = config.inactiveButtonClass;
+    this._inputErrorClass = config.inputErrorClass;
+    this._errorClass = config.errorClass;
+    this._form = form;
   }
-}
 
-function checkInputsInvalid(arr) {
-  return arr.some(input => {
-    return !input.validity.valid;
-  });
-}
-
-function addDisabledSubmit(submit, config) {
-  submit.disabled = true;
-  submit.classList.add(config);
-}
-
-function removeDisabledSubmit(submit, config) {
-  submit.disabled = false;
-  submit.classList.remove(config);
-}
-
-function toggleDisabledSubmit(inputArr, submit, config) {
-  if (checkInputsInvalid(inputArr)) {
-    addDisabledSubmit(submit, config);
-  } else {
-    removeDisabledSubmit(submit, config);
+  _makeInvalidInput(input) {
+    input.classList.add(this._inputErrorClass);
   }
-}
 
-function enableValidation(config) {
-  const formList = document.querySelectorAll(config.formSelector);
+  _removeInvalidInput(input) {
+    input.classList.remove(this._inputErrorClass);
+  }
 
-  formList.forEach(form => {
-    const inputList = Array.from(form.querySelectorAll(config.inputSelector));
-    const submitButton = form.querySelector(config.submitButtonSelector);
+  _showErrorMessage(input, errorSelector) {
+    errorSelector.classList.add(this._errorClass);
+    errorSelector.textContent = input.validationMessage;
+  }
 
-    inputList.forEach(input => {
-      const errorMessage = form.querySelector(`.popup__error_name_${input.name}`);
+  _hideErrorMessage(errorSelector) {
+    errorSelector.classList.remove(this._errorClass);
+    errorSelector.textContent = '';
+  }
 
-      input.addEventListener('input', () => {
-        toggleInputValidation(input, errorMessage, config);
-        toggleDisabledSubmit(inputList, submitButton, config.inactiveButtonClass);
-      });
+  _toggleInputValidation(input, errorSelector) {
+    if (!input.validity.valid) {
+      this._makeInvalidInput(input);
+      this._showErrorMessage(input, errorSelector);
+    } else {
+      this._removeInvalidInput(input);
+      this._hideErrorMessage(errorSelector);
+    }
+  }
+
+  _checkInputsInvalid() {
+    return this._inputList.some(input => {
+      return !input.validity.valid;
     });
-  });
+  }
+
+  _addDisabledSubmit() {
+    this._submitButton.disabled = true;
+    this._submitButton.classList.add(this._inactiveButtonClass);
+  }
+
+  _removeDisabledSubmit() {
+    this._submitButton.disabled = false;
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+  }
+
+  _toggleDisabledSubmit() {
+    if (this._checkInputsInvalid()) {
+      this._addDisabledSubmit();
+    } else {
+      this._removeDisabledSubmit();
+    }
+  }
+
+  _getErrorSelector(input) {
+    this._error = this._form.querySelector(`.popup__error_name_${input.name}`);
+
+    return this._error;
+  }
+
+  _setEventListeners(input, errorSelector) {
+    input.addEventListener('input', () => {
+      this._toggleInputValidation(input, errorSelector);
+      this._toggleDisabledSubmit();
+    });
+  }
+
+  enableValidation() {
+    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
+
+    this._inputList.forEach(input => {
+      this._setEventListeners(input, this._getErrorSelector(input));
+    });
+  }
+
+  resetValidation() {
+    this._inputList.forEach(input => {
+      this._removeInvalidInput(input);
+      this._hideErrorMessage(this._getErrorSelector(input));
+      this._toggleDisabledSubmit();
+    });
+  }
 }
-
-function resetValidation(form, config) {
-  const inputList = Array.from(form.querySelectorAll(config.inputSelector));
-  const submitButton = form.querySelector(config.submitButtonSelector);
-
-  inputList.forEach(input => {
-    const errorMessage = form.querySelector(`.popup__error_name_${input.name}`);
-
-    removeInvalidInput(input, config.inputErrorClass);
-    hideErrorMessage(errorMessage, config.errorClass);
-  });
-
-  toggleDisabledSubmit(inputList, submitButton, config.inactiveButtonClass);
-}
-
-enableValidation(formValidationConfig);
