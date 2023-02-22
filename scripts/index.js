@@ -1,3 +1,42 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
+const initialCards = [
+  {
+    name: 'Вестминстерский дворец',
+    link: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80'
+  },
+  {
+    name: 'Барселона',
+    link: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
+  },
+  {
+    name: 'Никола-Ленивец',
+    link: 'https://images.unsplash.com/photo-1566206894999-0a88a04a1665?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
+  },
+  {
+    name: 'Рига',
+    link: 'https://images.unsplash.com/photo-1566935571405-4b1faed95ee4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+  },
+  {
+    name: 'Тбилиси',
+    link: 'https://images.unsplash.com/photo-1562392249-582170da5d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80'
+  },
+  {
+    name: 'Исландия',
+    link: 'https://images.unsplash.com/photo-1506261423908-ea2559c1f24c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1484&q=80'
+  }
+];
+
+const formValidationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
@@ -6,70 +45,11 @@ const cardsContainer = document.querySelector('.cards');
 const popupList = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_name_edit-profile');
 const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
-const popupEditProfileSaveButton = popupEditProfile.querySelector('.popup__save-button');
-const popupEditProfileCloseButton = popupEditProfile.querySelector('.popup__close-button');
 const popupAddImage = document.querySelector('.popup_name_add-image');
 const popupAddImageForm = popupAddImage.querySelector('.popup__form');
-const popupAddImageSaveButton = popupAddImage.querySelector('.popup__save-button');
-const popupAddImageCloseButton = popupAddImage.querySelector('.popup__close-button');
-const popupImage = document.querySelector('.popup_name_image');
-const photo = popupImage.querySelector('.popup__photo');
-const caption = popupImage.querySelector('.popup__caption');
-const imageCloseButton = popupImage.querySelector('.popup__close-button');
 
-const formValidationEditProfile = new FormValidator(formValidationConfig, popupEditProfileForm);
-const formValidationAddImage = new FormValidator(formValidationConfig, popupAddImageForm);
-
-class Card {
-  constructor(data, templateSelector) {
-    this._name = data.name;
-    this._link = data.link;
-    this._templateSelector = templateSelector;
-  }
-
-  _getTemplate() {
-    const copyTemplateCard = document
-      .querySelector(this._templateSelector)
-      .content
-      .querySelector('.card')
-      .cloneNode(true);
-
-    return copyTemplateCard;
-  }
-
-  _setEventListeners() {
-    this._element.querySelector('.card__delete-button').addEventListener('click', () => this._element.remove());
-    this._element.querySelector('.card__like-button').addEventListener('click', () => this._handleToggle());
-    this._element.querySelector('.card__image').addEventListener('click', () => {
-      this._renderPopupImage();
-
-      openPopup(popupImage);
-    });
-  }
-
-  _handleToggle() {
-    this._element.querySelector('.card__like-button').classList.toggle('card__like-button_active');
-  }
-
-  _renderPopupImage() {
-    photo.src = this._link;
-    photo.alt = this._name;
-
-    caption.textContent = this._name;
-  }
-
-  generateCard() {
-    this._element = this._getTemplate();
-
-    this._element.querySelector('.card__description').textContent = this._name;
-    this._element.querySelector('.card__image').src = this._link;
-    this._element.querySelector('.card__image').alt = this._name;
-
-    this._setEventListeners();
-
-    return this._element;
-  }
-}
+const formValidatorEditProfile = new FormValidator(formValidationConfig, popupEditProfileForm);
+const formValidatorAddImage = new FormValidator(formValidationConfig, popupAddImageForm);
 
 function handleEscClose(evt) {
   if (evt.key === 'Escape') closePopup(document.querySelector('.popup_opened'));
@@ -79,7 +59,7 @@ function handleTarget(evt, popup) {
   if (evt.target.classList.contains('popup')) closePopup(popup);
 }
 
-function openPopup(popup) {
+export default function openPopup(popup) {
   popup.classList.add('popup_opened');
 
   window.addEventListener('keydown', handleEscClose);
@@ -130,26 +110,26 @@ function addImageToProfile(evt) {
 
 function renderProfileImages() {
   initialCards.forEach(item => {
-    renderCard(item)
+    renderCard(item);
   });
 }
 
 renderProfileImages();
 
-formValidationEditProfile.enableValidation();
-formValidationAddImage.enableValidation();
+formValidatorEditProfile.enableValidation();
+formValidatorAddImage.enableValidation();
 
 editButton.addEventListener('click', () => {
   openPopup(popupEditProfile);
   renderPopupInputs();
 
-  formValidationEditProfile.resetValidation()
+  formValidatorEditProfile.resetValidation()
 });
 
 addButton.addEventListener('click', () => {
   openPopup(popupAddImage);
 
-  formValidationAddImage.resetValidation();
+  formValidatorAddImage.resetValidation();
 });
 
 popupList.forEach(popup => {
