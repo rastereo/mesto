@@ -87,7 +87,7 @@ export default class FormValidator {
     this._inputList.forEach(input => {
       this._removeInvalidInput(input);
       this._hideErrorMessage(this._getErrorSelector(input));
-      this._toggleDisabledSubmit();
     });
+    this._toggleDisabledSubmit();
   }
 }
