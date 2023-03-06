@@ -1,5 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 const initialCards = [
   {
@@ -41,7 +42,6 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-const cardsContainer = document.querySelector('.cards');
 const popupList = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_name_edit-profile');
 const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
@@ -50,6 +50,8 @@ const popupAddImageForm = popupAddImage.querySelector('.popup__form');
 const popupImage = document.querySelector('.popup_name_image');
 const popupImagePhoto = popupImage.querySelector('.popup__photo');
 const popupImageCaption = popupImage.querySelector('.popup__caption');
+
+const cardsSelector = '.cards';
 
 const formValidatorEditProfile = new FormValidator(formValidationConfig, popupEditProfileForm);
 const formValidatorAddImage = new FormValidator(formValidationConfig, popupAddImageForm);
@@ -107,10 +109,6 @@ function createCard(item) {
   return cardElement;
 }
 
-function renderCard(item) {
-  cardsContainer.prepend(createCard(item));
-}
-
 function addImageToProfile(evt) {
   evt.preventDefault();
 
@@ -119,19 +117,21 @@ function addImageToProfile(evt) {
   cardObject.name = popupAddImageForm.description.value;
   cardObject.link = popupAddImageForm.link.value;
 
-  renderCard(cardObject);
+  cardList.addItem(createCard(cardObject));
+
   closePopup(popupAddImage);
 
   popupAddImageForm.reset();
 }
 
-function renderProfileImages() {
-  initialCards.forEach(item => {
-    renderCard(item);
-  });
-}
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    cardList.addItem(createCard(item));
+  }
+}, cardsSelector);
 
-renderProfileImages();
+cardList.renderItems();
 
 formValidatorEditProfile.enableValidation();
 formValidatorAddImage.enableValidation();
@@ -140,7 +140,7 @@ editButton.addEventListener('click', () => {
   openPopup(popupEditProfile);
   renderPopupInputs();
 
-  formValidatorEditProfile.resetValidation()
+  formValidatorEditProfile.resetValidation();
 });
 
 addButton.addEventListener('click', () => {
