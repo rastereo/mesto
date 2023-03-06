@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
 
 const initialCards = [
   {
@@ -58,10 +59,6 @@ const formValidatorAddImage = new FormValidator(formValidationConfig, popupAddIm
 
 function handleEscClose(evt) {
   if (evt.key === 'Escape') closePopup(document.querySelector('.popup_opened'));
-}
-
-function handleTarget(evt, popup) {
-  if (evt.target.classList.contains('popup')) closePopup(popup);
 }
 
 function openPopup(popup) {
@@ -149,11 +146,10 @@ addButton.addEventListener('click', () => {
   formValidatorAddImage.resetValidation();
 });
 
-popupList.forEach(popup => {
-  const closeButton = popup.querySelector('.popup__close-button');
+popupList.forEach(item => {
+  const popup = new Popup(item);
 
-  closeButton.addEventListener('click', () => closePopup(popup));
-  popup.addEventListener('click', (evt) => handleTarget(evt, popup));
+  popup.setEventListeners();
 });
 
 popupEditProfileForm.addEventListener('submit', rewriteProfileInfo);
