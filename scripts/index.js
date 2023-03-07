@@ -2,6 +2,7 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
 
 const initialCards = [
   {
@@ -49,8 +50,6 @@ const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
 const popupAddImage = document.querySelector('.popup_name_add-image');
 const popupAddImageForm = popupAddImage.querySelector('.popup__form');
 const popupImage = document.querySelector('.popup_name_image');
-const popupImagePhoto = popupImage.querySelector('.popup__photo');
-const popupImageCaption = popupImage.querySelector('.popup__caption');
 
 const cardsSelector = '.cards';
 
@@ -73,15 +72,6 @@ function closePopup(popup) {
   window.removeEventListener('keydown', handleEscClose);
 }
 
-function handleCardClick(name, link) {
-  popupImagePhoto.alt = name;
-  popupImagePhoto.src = link;
-
-  popupImageCaption.textContent = name;
-
-  openPopup(popupImage);
-}
-
 function renderPopupInputs() {
   popupEditProfileForm.name.value = profileName.textContent;
   popupEditProfileForm.job.value = profileJob.textContent;
@@ -100,7 +90,15 @@ function rewriteProfileInfo(evt) {
 }
 
 function createCard(item) {
-  const card = new Card(item, '#template-cards', handleCardClick);
+  const card = new Card({
+    data: item,
+    handleCardClick: (name, link) => {
+      const popupWhithImage = new PopupWithImage({ name, link }, popupImage);
+
+      popupWhithImage.open();
+    }
+  }, '#template-cards');
+
   const cardElement = card.generateCard();
 
   return cardElement;
