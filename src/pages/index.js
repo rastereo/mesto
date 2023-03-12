@@ -32,10 +32,7 @@ function createCard(item) {
   const card = new Card({
     data: item,
     handleCardClick: (name, link) => {
-      const popupWhithImage = new PopupWithImage({ name, link }, '.popup_name_image');
-
-      popupWhithImage.setEventListeners();
-      popupWhithImage.open();
+      popupWhithImage.open(name, link);
     }
   }, '#template-cards');
 
@@ -77,6 +74,10 @@ const popupAddImage = new PopupWithForm({
 }, '.popup_name_add-image');
 
 popupAddImage.setEventListeners();
+
+const popupWhithImage = new PopupWithImage('.popup_name_image');
+
+popupWhithImage.setEventListeners();
 
 editButton.addEventListener('click', () => {
   const { name, job } = userInfo.getUserInfo()
