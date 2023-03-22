@@ -29,8 +29,9 @@ const userInfo = new UserInfo({
 });
 
 api.getUserInfo()
-  .then(({ name, about, avatar }) => {
+  .then(({ name, about, avatar, _id }) => {
     userInfo.setUserInfo({ name, job: about });
+    userInfo.getUserId(_id)
 
     profileAvatar.src = avatar;
     profileAvatar.alt = `Аватар ${name}`
@@ -46,9 +47,26 @@ function createCard(item) {
   const card = new Card({
     data: item,
     handleCardClick: (name, link) => {
-      popupWhithImage.open(name, link);
+      popupWhithImage.open(name, link)
+    },
+    handleLikeClick: (cardId) => {
+      if (card.userLike) {
+        api.deleteLike(cardId)
+          .then(result => {
+            card.userLike = false;
+            card.likeCounter.textContent = result.likes.length;
+          })
+      } else {
+        api.putLike(cardId)
+          .then(result => {
+            card.userLike = true;
+            card.likeCounter.textContent = result.likes.length;
+          })
+      }
     }
   }, '#template-cards');
+
+  card.checkUserLike(userInfo.id)
 
   const cardElement = card.generateCard();
 
@@ -89,7 +107,7 @@ const popupEditProfile = new PopupWithForm({
       .finally(() => {
         renderLoading(false, popupEditProfileForm)
       })
-    }
+  }
 }, '.popup_name_edit-profile')
 
 popupEditProfile.setEventListeners();
@@ -97,13 +115,8 @@ popupEditProfile.setEventListeners();
 const popupAddImage = new PopupWithForm({
   handleFormSubmit: ({ description, link }) => {
     api.postCard(description, link)
-      .then(({ name, link }) => {
-        const cardObject = new Object()
-
-        cardObject.name = name;
-        cardObject.link = link;
-
-        cardList.addItem(createCard(cardObject));
+      .then(result => {
+        cardList.addItem(createCard(result));
 
         popupAddImage.close();
       })

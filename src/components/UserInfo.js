@@ -4,6 +4,10 @@ export default class UserInfo {
     this._job = document.querySelector(jobSelector);
   }
 
+  getUserId(id) {
+    this.id = id;
+  }
+
   getUserInfo() {
     this._userInfoValues = {}
 

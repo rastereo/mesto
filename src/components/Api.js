@@ -41,9 +41,9 @@ export default class Api {
 
         return Promise.reject(`Ошибка из patchUserInfo: ${res.status} ${res.statusText}`)
       })
-        .catch(err => {
-          console.log(err)
-        })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   getInitialCards() {
@@ -76,15 +76,53 @@ export default class Api {
         link: link,
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      };
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
 
-      return Promise.reject(`Ошибка из postCard: ${res.status} ${res.statusText}`);
+        return Promise.reject(`Ошибка из postCard: ${res.status} ${res.statusText}`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  putLike(cardId) {
+    return fetch(this._baseUrl + `/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token
+      }
     })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка из putLike: ${res.status} ${res.statusText}`);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  deleteLike(cardId) {
+    return fetch(this._baseUrl + `/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка из putLike: ${res.status} ${res.statusText}`);
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
