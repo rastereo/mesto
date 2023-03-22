@@ -14,7 +14,9 @@
   </header>
   <main>
     <section class="profile">
-      <img class="profile__avatar">
+      <button type="button" class="profile__avatar-button">
+        <img class="profile__avatar">
+      </button>
       <div class="profile__info">
         <h1 class="profile__name"></h1>
         <p class="profile__job"></p>
@@ -84,6 +86,22 @@
         <img src="#" alt="popup image" class="popup__photo">
         <figcaption class="popup__caption"></figcaption>
       </figure>
+      <button type="button" class="popup__close-button"></button>
+    </div>
+  </div>
+  <div class="popup popup_name_update-avatar">
+    <div class="popup__container">
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form action="#" method="get" name="update-avatar" class="popup__form">
+        <input type="url"
+          name="link"
+          placeholder="Ссылка на картинку"
+          class="popup__input popup__input_value_link"
+          required
+        >
+        <span class="popup__error popup__error_name_link"></span>
+        <button type="submit" class="popup__save-button popup__save-button_disabled" disabled>Сохранить</button>
+      </form>
       <button type="button" class="popup__close-button"></button>
     </div>
   </div>

@@ -1,11 +1,12 @@
 import '../pages/index.css';
 
 import {
+  avatarButton,
   editButton,
   addButton,
   popupEditProfileForm,
   popupAddImageForm,
-  profileAvatar
+  popupUpdateAvatarForm
 } from '../utils/constants.js';
 
 import { formValidationConfig } from '../utils/formValidationConfig.js';
@@ -25,29 +26,30 @@ const api = new Api({
 
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
-  jobSelector: '.profile__job'
+  jobSelector: '.profile__job',
+  avatarSelector: '.profile__avatar'
 });
 
 api.getUserInfo()
   .then(({ name, about, avatar, _id }) => {
     userInfo.setUserInfo({ name, job: about });
+    userInfo.setUserAvatar({ name, avatar })
     userInfo.getUserId(_id)
-
-    profileAvatar.src = avatar;
-    profileAvatar.alt = `Аватар ${name}`
   });
 
 const formValidatorEditProfile = new FormValidator(formValidationConfig, popupEditProfileForm);
 const formValidatorAddImage = new FormValidator(formValidationConfig, popupAddImageForm);
+const formValidatorUpdateAvatar = new FormValidator(formValidationConfig, popupUpdateAvatarForm);
 
 formValidatorEditProfile.enableValidation();
 formValidatorAddImage.enableValidation();
+formValidatorUpdateAvatar.enableValidation();
 
 function createCard(item) {
   const card = new Card({
     data: item,
     handleCardClick: (name, link) => {
-      popupWhithImage.open(name, link)
+      popupWhithImage.open(name, link);
     },
     handleLikeClick: (cardId) => {
       if (card.userLike) {
@@ -55,30 +57,22 @@ function createCard(item) {
           .then(result => {
             card.userLike = false;
             card.likeCounter.textContent = result.likes.length;
-          })
+          });
       } else {
         api.putLike(cardId)
           .then(result => {
             card.userLike = true;
             card.likeCounter.textContent = result.likes.length;
-          })
+          });
       }
     }
   }, '#template-cards');
 
-  card.checkUserLike(userInfo.id)
+  card.checkUserLike(userInfo.id);
 
   const cardElement = card.generateCard();
 
   return cardElement;
-}
-
-function renderLoading(isLoading, form) {
-  const button = form.querySelector('.popup__save-button')
-
-  isLoading
-    ? button.textContent = 'Сохранение...'
-    : button.textContent = 'Сохранить'
 }
 
 const cardList = new Section({
@@ -89,24 +83,24 @@ const cardList = new Section({
 
 api.getInitialCards()
   .then(result => {
-    cardList.renderItems = result.reverse()
+    cardList.renderItems = result.reverse();
 
     cardList.rendererItems();
   });
 
 const popupEditProfile = new PopupWithForm({
   handleFormSubmit: ({ name, job }) => {
-    renderLoading(true, popupEditProfileForm)
+    popupEditProfile.renderLoading(true)
 
     api.patchUserInfo(name, job)
-      .then(() => {
-        userInfo.setUserInfo({ name, job });
+      .then(({ name, about }) => {
+        userInfo.setUserInfo({ name, job: about });
 
         popupEditProfile.close();
       })
       .finally(() => {
-        renderLoading(false, popupEditProfileForm)
-      })
+        popupEditProfile.renderLoading(false);
+      });
   }
 }, '.popup_name_edit-profile')
 
@@ -119,18 +113,36 @@ const popupAddImage = new PopupWithForm({
         cardList.addItem(createCard(result));
 
         popupAddImage.close();
-      })
+      });
   }
 }, '.popup_name_add-image');
 
 popupAddImage.setEventListeners();
+
+const popupUpdateAvatar = new PopupWithForm({
+  handleFormSubmit: (avatar) => {
+    popupUpdateAvatar.renderLoading(true);
+
+    api.patchAvatar(avatar.link)
+      .then(({ name, avatar }) => {
+        userInfo.setUserAvatar({ name, avatar });
+
+        popupUpdateAvatar.close();
+      })
+      .finally(() => {
+        popupUpdateAvatar.renderLoading(false);
+      });
+  }
+}, '.popup_name_update-avatar');
+
+popupUpdateAvatar.setEventListeners();
 
 const popupWhithImage = new PopupWithImage('.popup_name_image');
 
 popupWhithImage.setEventListeners();
 
 editButton.addEventListener('click', () => {
-  const { name, job } = userInfo.getUserInfo()
+  const { name, job } = userInfo.getUserInfo();
 
   popupEditProfileForm.name.value = name;
   popupEditProfileForm.job.value = job;
@@ -144,4 +156,10 @@ addButton.addEventListener('click', () => {
   formValidatorAddImage.resetValidation();
 
   popupAddImage.open();
+});
+
+avatarButton.addEventListener('click', () => {
+  formValidatorUpdateAvatar.resetValidation();
+
+  popupUpdateAvatar.open();
 });

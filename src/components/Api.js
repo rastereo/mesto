@@ -46,6 +46,29 @@ export default class Api {
       })
   }
 
+  patchAvatar(avatar) {
+    return fetch(this._baseUrl + '/users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка из patchAvatar: ${res.status} ${res.statusText}`);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   getInitialCards() {
     return fetch(this._baseUrl + '/cards', {
       headers: {
