@@ -16,10 +16,7 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из getUserInfo: ${res.status} ${res.statusText}`);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      });
   }
 
   patchUserInfo(name, job) {
@@ -40,10 +37,7 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из patchUserInfo: ${res.status} ${res.statusText}`)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      });
   }
 
   patchAvatar(avatar) {
@@ -63,10 +57,7 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из patchAvatar: ${res.status} ${res.statusText}`);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      });
   }
 
   getInitialCards() {
@@ -81,9 +72,6 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из getInitialCards: ${res.status} ${res.statusText}`);
-      })
-      .catch(err => {
-        console.log(err);
       });
   }
 
@@ -105,9 +93,22 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из postCard: ${res.status} ${res.statusText}`);
-      })
-      .catch(err => {
-        console.log(err);
+      });
+  }
+
+  deleteCard(cardId) {
+    return fetch(this._baseUrl + `/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка из deleteCard: ${res.status} ${res.statusText}`);
       });
   }
 
@@ -124,10 +125,7 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из putLike: ${res.status} ${res.statusText}`);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      });
   }
 
   deleteLike(cardId) {
@@ -143,9 +141,6 @@ export default class Api {
         }
 
         return Promise.reject(`Ошибка из putLike: ${res.status} ${res.statusText}`);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      });
   }
 }

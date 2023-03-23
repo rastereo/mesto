@@ -54,11 +54,9 @@ export default class FormValidator {
   }
 
   _toggleDisabledSubmit() {
-    if (this._checkInputsInvalid()) {
-      this._addDisabledSubmit();
-    } else {
-      this._removeDisabledSubmit();
-    }
+    this._checkInputsInvalid()
+      ? this._addDisabledSubmit()
+      : this._removeDisabledSubmit();
   }
 
   _getErrorSelector(input) {

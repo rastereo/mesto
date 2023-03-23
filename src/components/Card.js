@@ -1,12 +1,14 @@
 export default class Card {
-  constructor({ data, handleCardClick, handleLikeClick }, templateSelector) {
+  constructor({ data, handleCardClick, handleCardDelete, handleLikeClick }, templateSelector) {
     this._name = data.name;
+    this._ownerId = data.owner._id;
     this._cardId = data._id;
     this._link = data.link;
     this._likes = data.likes;
-    this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
     this._handleLikeClick = handleLikeClick;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
@@ -19,14 +21,30 @@ export default class Card {
     return copyTemplateCard;
   }
 
-  _removeCard() {
+  _setEventListeners() {
+    this.userCard
+      ? this._deleteButton.addEventListener('click', () => this._handleCardDelete(this._cardId))
+      : this._deleteButton.remove();
+
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikeClick(this._cardId);
+    });
+
+    this._cardImage.addEventListener('click', () => this._handleCardClick(this._name, this._link));
+  }
+
+  handleToggleLikeButton() {
+    this._likeButton.classList.toggle('card__like-button_active');
+  }
+
+  setCountLikes(number) {
+    this._likeCounter.textContent = number;
+  }
+
+  removeCard() {
     this._element.remove();
 
     this._element = null;
-  }
-
-  _handleToggleLikeButton() {
-    this._likeButton.classList.toggle('card__like-button_active');
   }
 
   checkUserLike(userId) {
@@ -35,13 +53,8 @@ export default class Card {
     });
   }
 
-  _setEventListeners() {
-    this._deleteButton.addEventListener('click', () => this._removeCard());
-    this._likeButton.addEventListener('click', () => {
-      this._handleLikeClick(this._cardId);
-      this._handleToggleLikeButton();
-    });
-    this._cardImage.addEventListener('click', () => this._handleCardClick(this._name, this._link));
+  checkUserCard(userId) {
+    this.userCard = this._ownerId === userId;
   }
 
   generateCard() {
@@ -51,15 +64,16 @@ export default class Card {
     this._cardDescription = this._element.querySelector('.card__description');
     this._deleteButton = this._element.querySelector('.card__delete-button');
     this._likeButton = this._element.querySelector('.card__like-button');
-    this.likeCounter = this._element.querySelector('.card__like-counter');
+    this._likeCounter = this._element.querySelector('.card__like-counter');
 
     this._cardDescription.textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this.likeCounter.textContent = this._likes.length;
+
+    this.setCountLikes(this._likes.length)
 
     if (this.userLike) {
-      this._handleToggleLikeButton()
+      this.handleToggleLikeButton()
     }
 
     this._setEventListeners();

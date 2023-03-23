@@ -15,7 +15,7 @@
   <main>
     <section class="profile">
       <button type="button" class="profile__avatar-button">
-        <img class="profile__avatar">
+        <img src="#" alt="Аватар" class="profile__avatar">
       </button>
       <div class="profile__info">
         <h1 class="profile__name"></h1>
@@ -32,7 +32,7 @@
   <div class="popup popup_name_edit-profile">
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form action="#" method="get" name="edit-profile" class="popup__form">
+      <form action="#" name="edit-profile" class="popup__form">
         <input type="text"
           name="name"
           placeholder="Имя"
@@ -58,7 +58,7 @@
   <div class="popup popup_name_add-image">
     <div class="popup__container">
       <h3 class="popup__title">Новое место</h3>
-      <form action="#" method="get" name="add-image" class="popup__form">
+      <form action="#" name="add-image" class="popup__form">
         <input type="text"
           name="description"
           placeholder="Название"
@@ -92,7 +92,7 @@
   <div class="popup popup_name_update-avatar">
     <div class="popup__container">
       <h3 class="popup__title">Обновить аватар</h3>
-      <form action="#" method="get" name="update-avatar" class="popup__form">
+      <form action="#" name="update-avatar" class="popup__form">
         <input type="url"
           name="link"
           placeholder="Ссылка на картинку"
@@ -101,6 +101,15 @@
         >
         <span class="popup__error popup__error_name_link"></span>
         <button type="submit" class="popup__save-button popup__save-button_disabled" disabled>Сохранить</button>
+      </form>
+      <button type="button" class="popup__close-button"></button>
+    </div>
+  </div>
+  <div class="popup popup_name_delete-card">
+    <div class="popup__container">
+      <h3 class="popup__title">Вы уверены?</h3>
+      <form action="#" name="delete-card" class="popup__form">
+        <button type="submit" class="popup__save-button popup__save-button_margin_none">Да</button>
       </form>
       <button type="button" class="popup__close-button"></button>
     </div>
