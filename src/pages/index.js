@@ -31,16 +31,6 @@ const userInfo = new UserInfo({
   avatarSelector: '.profile__avatar'
 });
 
-api.getUserInfo()
-  .then(({ name, about, avatar, _id }) => {
-    userInfo.setUserInfo({ name, job: about });
-    userInfo.setUserAvatar({ name, avatar });
-    userInfo.getUserId(_id);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
 const formValidatorEditProfile = new FormValidator(formValidationConfig, popupEditProfileForm);
 const formValidatorAddImage = new FormValidator(formValidationConfig, popupAddImageForm);
 const formValidatorUpdateAvatar = new FormValidator(formValidationConfig, popupUpdateAvatarForm);
@@ -52,8 +42,9 @@ formValidatorUpdateAvatar.enableValidation();
 function createCard(item) {
   const card = new Card({
     data: item,
+    userId: userInfo.setUserId(),
     handleCardClick: (name, link) => {
-      popupWhithImage.open(name, link);
+      popupWithImage.open(name, link);
     },
     handleCardDelete: (cardId) => {
       popupDeleteCard.getCallback({
@@ -72,35 +63,28 @@ function createCard(item) {
 
       popupDeleteCard.open();
     },
-    handleLikeClick: (cardId) => {
-      if (card.userLike) {
+    handleLikeClick: (userLike, cardId) => {
+      if (userLike) {
+        api.putLike(cardId)
+        .then(result => {
+          card.handleToggleLikeButton();
+          card.setCountLikes(result.likes.length)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      } else {
         api.deleteLike(cardId)
           .then(result => {
             card.handleToggleLikeButton();
             card.setCountLikes(result.likes.length)
-
-            card.userLike = false;
           })
           .catch(err => {
             console.log(err)
           });
-      } else {
-        api.putLike(cardId)
-          .then(result => {
-            card.handleToggleLikeButton();
-            card.setCountLikes(result.likes.length)
-
-            card.userLike = true;
-          })
-          .catch(err => {
-            console.log(err);
-          });
       }
     }
   }, '#template-cards');
-
-  card.checkUserLike(userInfo.id);
-  card.checkUserCard(userInfo.id);
 
   const cardElement = card.generateCard();
 
@@ -113,11 +97,19 @@ const cardList = new Section({
   }
 }, '.cards');
 
-api.getInitialCards()
-  .then(result => {
-    cardList.renderItems = result.reverse();
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+  .then(([{ name, about, avatar, _id }, cards]) => {
+    userInfo.setUserInfo({ name, job: about });
+    userInfo.setUserAvatar({ name, avatar });
+    userInfo.getUserId(_id);
 
-    cardList.rendererItems();
+    cardList.renderItems(cards.reverse());
+  })
+  .catch(err => {
+    console.log(err);
   });
 
 const popupUpdateAvatar = new PopupWithForm({
@@ -166,20 +158,24 @@ const popupAddImage = new PopupWithForm({
       .then(result => {
         cardList.addItem(createCard(result));
 
-        popupAddImage.renderLoading(false)
-
         popupAddImage.close();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        popupAddImage.renderLoading(false);
       });
   }
 }, '.popup_name_add-image');
 
-const popupWhithImage = new PopupWithImage('.popup_name_image');
+const popupWithImage = new PopupWithImage('.popup_name_image');
 const popupDeleteCard = new PopupWithConfirmation('.popup_name_delete-card');
 
 popupUpdateAvatar.setEventListeners();
 popupEditProfile.setEventListeners();
 popupAddImage.setEventListeners();
-popupWhithImage.setEventListeners();
+popupWithImage.setEventListeners();
 popupDeleteCard.setEventListeners();
 
 avatarButton.addEventListener('click', () => {

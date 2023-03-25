@@ -6,7 +6,11 @@ export default class UserInfo {
   }
 
   getUserId(id) {
-    this.id = id;
+    this._id = id;
+  }
+
+  setUserId() {
+    return this._id;
   }
 
   getUserInfo() {
