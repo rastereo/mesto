@@ -33,7 +33,7 @@
 .popup__save-button{background-color:var(--form-profile-text-color);border:none;border-radius:2px;color:var(--text-color);cursor:pointer;font-size:18px;font-weight:400;height:50px;line-height:1.22;margin-top:27px;transition:all .6s;width:358px}.popup__save-button:hover{opacity:.8}@media screen and (max-width:450px){.popup__save-button{font-size:14px;height:46px;line-height:1.21;margin-top:25px;width:238px}}
 .popup__save-button_disabled{background:none;border:2px solid var(--form-profile-text-color);color:var(--form-profile-text-color);opacity:.2;transition:none;transition:all .6s}.popup__save-button_disabled:hover{cursor:default;opacity:.2}
 .popup__save-button_margin_none{margin:0}
-.popup__close-button{background-color:transparent;background-image:url(images/close-icon.039f1f5203f653b4bacd.svg);background-position:0 0;background-repeat:no-repeat;background-size:cover;border:none;cursor:pointer;height:32px;position:absolute;right:-40px;top:-40px;transition:opacity .6s;width:32px}.popup__close-button:hover{opacity:.6}@media screen and (max-width:540px){.popup__close-button{height:20px;right:0;width:20px}}
+.popup__close-button{background-color:transparent;background-image:url(images/close-icon.039f1f5203f653b4bacd.svg);background-position:0 0;background-repeat:no-repeat;background-size:contain;border:none;cursor:pointer;height:32px;position:absolute;right:-40px;top:-40px;transition:opacity .6s;width:32px}.popup__close-button:hover{opacity:.6}@media screen and (max-width:540px){.popup__close-button{height:20px;right:0;width:20px}}
 .popup__container-image{cursor:default;position:relative}
 .popup__caption{color:var(--text-color);font-size:12px;font-weight:400;line-height:1.25;padding-top:10px}
 .popup__figure{margin:0;position:relative}
